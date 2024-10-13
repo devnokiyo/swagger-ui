@@ -25,6 +25,7 @@ export default class Oauth2 extends React.Component {
     let username = auth && auth.get("username") || ""
     let clientId = auth && auth.get("clientId") || authConfigs.clientId || ""
     let clientSecret = auth && auth.get("clientSecret") || authConfigs.clientSecret || ""
+    let audience = auth && auth.get("audience") || schema.get("xNeedAudience") && authConfigs.audience || ""
     let passwordType = auth && auth.get("passwordType") || "basic"
     let scopes = auth && auth.get("scopes") || authConfigs.scopes || []
     if (typeof scopes === "string") {
@@ -38,6 +39,7 @@ export default class Oauth2 extends React.Component {
       scopes: scopes,
       clientId: clientId,
       clientSecret: clientSecret,
+      audience: audience,
       username: username,
       password: "",
       passwordType: passwordType
@@ -141,6 +143,7 @@ export default class Oauth2 extends React.Component {
     let errors = errSelectors.allErrors().filter( err => err.get("authId") === name)
     let isValid = !errors.filter( err => err.get("source") === "validation").size
     let description = schema.get("description")
+    let xNeedAudience = schema.get("xNeedAudience")
 
     return (
       <div>
@@ -221,6 +224,23 @@ export default class Oauth2 extends React.Component {
                                       initialValue={ this.state.clientSecret }
                                       type="password"
                                       data-name="clientSecret"
+                                      onChange={ this.onInputChange }/>
+                             </Col>
+            }
+
+          </Row>
+        )}
+
+        {
+          ( xNeedAudience && (flow === AUTH_FLOW_APPLICATION || flow === AUTH_FLOW_ACCESS_CODE || flow === AUTH_FLOW_PASSWORD) && <Row>
+            <label htmlFor={ `audience_${flow}` }>audience:</label>
+            {
+              isAuthorized ? <code> ****** </code>
+                           : <Col tablet={10} desktop={10}>
+                               <InitializedInput id={ `audience_${flow}` }
+                                      initialValue={ this.state.audience }
+                                      type="text"
+                                      data-name="audience"
                                       onChange={ this.onInputChange }/>
                              </Col>
             }
