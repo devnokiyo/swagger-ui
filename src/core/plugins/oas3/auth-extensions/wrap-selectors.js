@@ -41,6 +41,7 @@ export const definitionsToAuthorize = onlyOAS3(createSelector(
               authorizationUrl: flowVal.get("authorizationUrl"),
               tokenUrl: flowVal.get("tokenUrl"),
               scopes: flowVal.get("scopes"),
+              xNeedAudience: flowVal.get("x-needAudience"),
               type: definition.get("type"),
               description: definition.get("description")
             })
