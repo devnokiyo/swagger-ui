@@ -22,10 +22,11 @@ window.onload = function() {
   ui.initOAuth({
     clientId: "your-client-id",
     clientSecret: "your-client-secret-if-required",
+    audience: "your-audience-if-required",
     realm: "your-realms",
     appName: "your-app-name",
     scopeSeparator: " ",
-    scopes: "openid profile email phone address",
+    scopes: "",
     additionalQueryStringParams: {},
     useBasicAuthenticationWithAccessCodeGrant: false,
     usePkceWithAuthorizationCodeGrant: false
